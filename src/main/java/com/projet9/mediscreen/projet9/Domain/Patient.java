@@ -1,26 +1,70 @@
 package com.projet9.mediscreen.projet9.Domain;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.UniqueConstraint;
+import org.hibernate.annotations.Columns;
+import org.hibernate.annotations.Table;
+import org.springframework.data.annotation.AccessType;
+import org.springframework.data.annotation.Id;
+
+import java.io.Serializable;
 import java.util.Date;
 
-public class Patient {
+@AccessType(AccessType.Type.FIELD)
+@Entity
+@Table(appliesTo = "patient")
+public class Patient implements Serializable {
 
+    @Id
+    @Column(name = "id")
+    private int id;
+
+    @Column(name = "firstName")
     private String firstName;
+
+    @Column(name = "lastName")
     private String lastName;
-    private Date date;
+
+    @Column(name = "birthDate")
+    private Date birthDate;
+
+    @Column(name = "gender")
     private String gender;
+
+    @Column(name = "phoneNumber")
     private String phoneNumber;
+
+    @Column(name = "address")
     private String address;
 
-    public Patient(String firstName, String lastName, Date date, String gender, String phoneNumber, String address) {
+    public Patient(int id, String firstName, String lastName, Date birthDate, String gender, String phoneNumber, String address) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.date = date;
+        this.birthDate = birthDate;
         this.gender = gender;
         this.phoneNumber = phoneNumber;
         this.address = address;
     }
 
     public Patient() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 
     public String getFirstName() {
@@ -39,13 +83,6 @@ public class Patient {
         this.lastName = lastName;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
 
     public String getGender() {
         return gender;

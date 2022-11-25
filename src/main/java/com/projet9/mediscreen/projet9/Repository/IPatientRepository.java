@@ -4,4 +4,6 @@ import com.projet9.mediscreen.projet9.Domain.Patient;
 import org.springframework.data.repository.CrudRepository;
 
 public interface IPatientRepository extends CrudRepository<Patient, Integer> {
+
+    public Patient findByLastNameAndFirstName(String lastName, String firstName);
 }
