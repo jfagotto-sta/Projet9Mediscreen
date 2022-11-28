@@ -16,17 +16,15 @@ public class PatientService {
         return iPatientRepository.save(patient);
     }
 
-    public Optional<Patient> findById(int id){
+    public Patient findById(int id){
         return iPatientRepository.findById(id);
     }
 
-//    public Boolean deletePatientById(int id){
-//        Optional<Patient> patient = findById(id);
-//
-//        if(patient.isPresent()){
-//        iPatientRepository.delete(patient);}
-//        return true;
-//    }
+    public Boolean deletePatientById(int id){
+        Patient patient = findById(id);
+        iPatientRepository.delete(patient);
+        return true;
+    }
 
     public Iterable<Patient> findAllPatient(){
         return iPatientRepository.findAll();

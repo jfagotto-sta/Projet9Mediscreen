@@ -6,4 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 public interface IPatientRepository extends CrudRepository<Patient, Integer> {
 
     public Patient findByLastNameAndFirstName(String lastName, String firstName);
+    public Patient findById(int id);
 }
