@@ -26,31 +26,25 @@ public class PatientController {
         return patientService.findAllPatient();
     }
 
-    @GetMapping("/patient/{lastname}{firstname}")
+    @GetMapping("/patient/{lastname}/{firstname}")
     @ResponseStatus(code=HttpStatus.OK)
     public Patient getPatientWithLastName(@PathVariable("lastname") String lastName, @PathVariable("firstname") String firstName){
         return patientService.findByLastNameAndFirstName(lastName,firstName);
     }
 
-    @PostMapping
+    @PostMapping("/patient")
     @ResponseStatus(code=HttpStatus.OK)
     public Patient newPatient(@RequestBody Patient patient){
         return patientService.newPatient(patient);
     }
 
-    @PostMapping("patient/update{id}")
+    @PutMapping("/patient/update")
     @ResponseStatus(code=HttpStatus.OK)
-    public Patient updatePatientWithId(@RequestBody Patient patient,@PathVariable("id") Integer id) {
-    Patient patientInDataBase = patientService.findById(id);
-   patientInDataBase.setLastName(patient.getLastName());
-   patientInDataBase.setFirstName(patient.getFirstName());
-   patientInDataBase.setBirthDate(patient.getBirthDate());
-   patientInDataBase.setAddress(patient.getAddress());
-   patientService.newPatient(patientInDataBase);
-        return patientInDataBase;
+    public Patient updatePatientWithId(@RequestBody Patient patient) {
+        return patientService.updatePatientData(patient);
     }
 
-    @DeleteMapping("/delete{id}")
+    @DeleteMapping("patient/delete/{id}")
     @ResponseStatus(code=HttpStatus.OK)
     public Boolean deletePatientWithId(@PathVariable("id") Integer id){
         patientService.deletePatientById(id);

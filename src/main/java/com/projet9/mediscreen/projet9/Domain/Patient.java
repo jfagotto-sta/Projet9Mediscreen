@@ -1,23 +1,20 @@
 package com.projet9.mediscreen.projet9.Domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.UniqueConstraint;
-import org.hibernate.annotations.Columns;
-import org.hibernate.annotations.Table;
+import jakarta.persistence.*;
 import org.springframework.data.annotation.AccessType;
-import org.springframework.data.annotation.Id;
+
 
 import java.io.Serializable;
 import java.util.Date;
 
 @AccessType(AccessType.Type.FIELD)
 @Entity
-@Table(appliesTo = "patient")
+@Table(name = "PATIENT")
 public class Patient implements Serializable {
 
     @Id
-    @Column(name = "id")
+    @GeneratedValue(strategy =  GenerationType.AUTO)
+    @Column(name = "idPatient")
     private int id;
 
     @Column(name = "firstName")
