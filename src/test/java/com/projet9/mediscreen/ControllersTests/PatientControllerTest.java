@@ -6,8 +6,8 @@ import com.projet9.mediscreen.Service.PatientService;
 import org.junit.jupiter.api.Test;
 
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -29,14 +29,14 @@ import java.util.List;
 
 
 @SpringBootTest
-@AutoConfigureMockMvc
 @WebAppConfiguration
+@AutoConfigureMockMvc
 public class PatientControllerTest {
 
     @MockBean
     public PatientService patientService;
 
-    @MockBean
+    @Autowired
     private MockMvc mockMvc;
 
 
@@ -61,7 +61,7 @@ public class PatientControllerTest {
 
         mockMvc.perform(get("/patient/liste"))
             .andExpect(status().isOk())
-            .andExpect(model().attribute("trades",containsInAnyOrder(patient,patient2)));
+            .andExpect(model().attribute("patients",containsInAnyOrder(patient,patient2)));
 
         mockMvc.perform(get("/patient/add"))
             .andExpect(status().isOk());
@@ -69,7 +69,7 @@ public class PatientControllerTest {
         mockMvc.perform(post("/patient/validate"))
             .andExpect(redirectedUrl("/patient/liste"));
 
-        Mockito.doNothing().when(patientService).newPatient(patient);
+        Mockito.when(patientService.newPatient(patient)).thenReturn(patient);
 
 
         mockMvc.perform(post("/patient/validate").contentType(MediaType.APPLICATION_JSON).content(t))
