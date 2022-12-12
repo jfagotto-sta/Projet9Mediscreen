@@ -2,6 +2,7 @@ package com.projet9.mediscreen.Domain;
 
 import jakarta.persistence.*;
 import org.springframework.data.annotation.AccessType;
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 import java.io.Serializable;
@@ -25,6 +26,7 @@ public class Patient implements Serializable {
     private String lastName;
 
     @Column(name = "birthDate")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthDate;
 
     @Column(name = "gender")

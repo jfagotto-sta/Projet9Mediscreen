@@ -40,7 +40,7 @@ public class PatientController {
         if (!result.hasErrors()) {
             patientService.newPatient(patient);
             model.addAttribute("patients", patientService.findAllPatient());
-            return "redirect:/patient/list";
+            return "redirect:/patient/liste";
         }
         return "patient/add";
     }
@@ -63,7 +63,7 @@ public class PatientController {
         patient.setId(id);
         patientService.newPatient(patient);
         model.addAttribute("patients", patientService.findAllPatient());
-        return "redirect:/patient/list";
+        return "redirect:/patient/liste";
     }
 
     @GetMapping("/patient/delete/{id}")
@@ -71,7 +71,7 @@ public class PatientController {
     public String deleteRating(@PathVariable("id") Integer id, Model model) {
         patientService.deletePatientById(id);
         model.addAttribute("patients", patientService.findAllPatient());
-        return "redirect:/patient/list";
+        return "redirect:/patient/liste";
     }
 
 

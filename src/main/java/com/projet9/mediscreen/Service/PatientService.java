@@ -43,4 +43,7 @@ public class PatientService {
 
     }
 
+    public void deleteAll() {
+        iPatientRepository.deleteAll();
+    }
 }
