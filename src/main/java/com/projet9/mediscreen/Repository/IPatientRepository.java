@@ -1,6 +1,6 @@
-package com.projet9.mediscreen.projet9.Repository;
+package com.projet9.mediscreen.Repository;
 
-import com.projet9.mediscreen.projet9.Domain.Patient;
+import com.projet9.mediscreen.Domain.Patient;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

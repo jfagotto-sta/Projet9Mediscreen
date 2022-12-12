@@ -1,14 +1,14 @@
-package com.projet9.mediscreen.projet9;
+package com.projet9.mediscreen;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
-public class Projet9Application {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Projet9Application.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 
 }

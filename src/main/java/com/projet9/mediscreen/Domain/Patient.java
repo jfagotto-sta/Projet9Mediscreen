@@ -1,4 +1,4 @@
-package com.projet9.mediscreen.projet9.Domain;
+package com.projet9.mediscreen.Domain;
 
 import jakarta.persistence.*;
 import org.springframework.data.annotation.AccessType;
@@ -15,7 +15,8 @@ public class Patient implements Serializable {
     @Id
     @GeneratedValue(strategy =  GenerationType.AUTO)
     @Column(name = "idPatient")
-    private int id;
+    private Integer id;
+
 
     @Column(name = "firstName")
     private String firstName;
@@ -35,7 +36,7 @@ public class Patient implements Serializable {
     @Column(name = "address")
     private String address;
 
-    public Patient(int id, String firstName, String lastName, Date birthDate, String gender, String phoneNumber, String address) {
+    public Patient(Integer id, String firstName, String lastName, Date birthDate, String gender, String phoneNumber, String address) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -48,11 +49,11 @@ public class Patient implements Serializable {
     public Patient() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
