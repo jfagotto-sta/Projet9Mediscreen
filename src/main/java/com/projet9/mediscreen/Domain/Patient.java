@@ -1,12 +1,15 @@
 package com.projet9.mediscreen.Domain;
 
+import com.projet9.mediscreen.Service.NoteDTOService;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.AccessType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @AccessType(AccessType.Type.FIELD)
 @Entity
@@ -16,7 +19,7 @@ public class Patient implements Serializable {
     @Id
     @GeneratedValue(strategy =  GenerationType.AUTO)
     @Column(name = "idPatient")
-    private Integer id;
+    private Long id;
 
 
     @Column(name = "firstName")
@@ -38,7 +41,11 @@ public class Patient implements Serializable {
     @Column(name = "address")
     private String address;
 
-    public Patient(Integer id, String firstName, String lastName, Date birthDate, String gender, String phoneNumber, String address) {
+    @Transient
+    private List<NoteDTO> notes = new ArrayList<>();
+
+
+    public Patient(Long id, String firstName, String lastName, Date birthDate, String gender, String phoneNumber, String address) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -51,11 +58,11 @@ public class Patient implements Serializable {
     public Patient() {
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -106,5 +113,13 @@ public class Patient implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public void setNotes(List<NoteDTO> notes) {
+        this.notes = notes;
+    }
+
+    public List<NoteDTO> getNotes() {
+        return this.notes;
     }
 }

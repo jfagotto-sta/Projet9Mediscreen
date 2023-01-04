@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface IPatientRepository extends CrudRepository<Patient, Integer> {
 
     public Patient findByLastNameAndFirstName(String lastName, String firstName);
-    public Patient findById(int id);
+    public Patient findById(long id);
 }

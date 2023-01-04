@@ -32,7 +32,7 @@
 //
 //        // Test creation of a patient
 //
-//        Patient patient = new Patient(1,"toto","titi",new Date(),"male","0606060606","29, rue moulin");
+//        Patient patient = new Patient(1,"toto","titi",new Date(),"male","0606060606","29, rue moulin", note);
 //        patientService.newPatient(patient);
 //        Patient patient1 = patientService.findById(patient.getId());
 //        assertNotNull(patient1);
