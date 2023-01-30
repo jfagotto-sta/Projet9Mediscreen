@@ -3,8 +3,10 @@ package com.projet9.mediscreen.Controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.projet9.mediscreen.Domain.NoteDTO;
 import com.projet9.mediscreen.Domain.Patient;
+import com.projet9.mediscreen.Domain.PatientStatusDto;
 import com.projet9.mediscreen.Service.NoteDTOService;
 import com.projet9.mediscreen.Service.PatientService;
+import com.projet9.mediscreen.Service.PatientStatusDTOService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
@@ -24,6 +26,9 @@ public class PatientRestController {
     @Autowired
     NoteDTOService noteDTOService;
 
+    @Autowired
+    PatientStatusDTOService patientStatusDTOService;
+
     @GetMapping("/notes/patient")
     @ResponseStatus(code = HttpStatus.OK)
     public Patient getPatientById(@RequestParam long id) throws IOException {
@@ -32,6 +37,14 @@ public class PatientRestController {
         patient.setNotes(list);
         return patient;
     }
+
+    @GetMapping("/patient/{id}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public Patient getPatientById(@PathVariable Long id) {
+        return patientService.findById(id);
+    }
+
+//o
 
 
 //    @GetMapping("/note/list/patient")

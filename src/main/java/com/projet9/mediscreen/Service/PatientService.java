@@ -1,6 +1,8 @@
 package com.projet9.mediscreen.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.projet9.mediscreen.Domain.Patient;
+import com.projet9.mediscreen.Domain.PatientStatusDto;
 import com.projet9.mediscreen.Repository.IPatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,9 @@ public class PatientService {
 
     @Autowired
     IPatientRepository iPatientRepository;
+
+    @Autowired
+    PatientStatusDTOService patientStatusDTOService;
 
 
   public Patient newPatient(Patient patient) {
@@ -32,7 +37,17 @@ public class PatientService {
     }
 
     public Iterable<Patient> findAllPatient(){
-        return iPatientRepository.findAll();
+        Iterable<Patient> patients = iPatientRepository.findAll();
+        for (Patient p :patients) {
+            PatientStatusDto patientStatusDto = null;
+            try {
+                patientStatusDto = patientStatusDTOService.getPatientStatus(p.getId());
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+            p.setPatientStatusDto(patientStatusDto);
+        }
+        return patients;
     }
 
     public Patient updatePatient(Patient patient){

@@ -1,7 +1,6 @@
 package com.projet9.mediscreen.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.projet9.mediscreen.Domain.NoteDTO;
 
@@ -69,11 +68,19 @@ public class NoteDTOService {
                 .get(NoteDTO.class);
 
 
-        //Gson gson = new Gson();
-        //Type listType = new TypeToken<List<NoteDTO>>(){}.getType();
-        //NoteDTO note = gson.fromJson(response, NoteDTO.class);
 
         return response;
+    }
+
+    public void newNote(NoteDTO noteDTO) throws JsonProcessingException {
+
+        Client client = ClientBuilder.newClient();
+
+
+        WebTarget resource = client.target("http://localhost:8082/note");
+        resource.request()
+                .accept(MediaType.APPLICATION_JSON)
+                .post(Entity.json(noteDTO), NoteDTO.class);
     }
 }
 

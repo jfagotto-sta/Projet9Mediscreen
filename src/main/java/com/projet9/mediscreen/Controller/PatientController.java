@@ -4,8 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.projet9.mediscreen.Domain.NoteDTO;
 import com.projet9.mediscreen.Domain.Patient;
+import com.projet9.mediscreen.Domain.PatientStatusDto;
 import com.projet9.mediscreen.Service.NoteDTOService;
 import com.projet9.mediscreen.Service.PatientService;
+import com.projet9.mediscreen.Service.PatientStatusDTOService;
 import org.apache.catalina.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,41 +32,41 @@ public class PatientController {
     @Autowired
     NoteDTOService noteDTOService;
 
-//    @Autowired
-//    PatientWithNoteDtoService patientWithNoteDtoService;
+    @Autowired
+    PatientStatusDTOService patientStatusDTOService;
 
 
     @GetMapping("/patient/list")
-    @ResponseStatus(code=HttpStatus.OK)
-    public String home(Model model){
+    @ResponseStatus(code = HttpStatus.OK)
+    public String home(Model model) {
         Iterable<Patient> bidule = patientService.findAllPatient();
-        model.addAttribute("patients",bidule);
+        model.addAttribute("patients", bidule);
         return "Patient/list";
     }
 
     @GetMapping("/note/delete/{id}/{idPatient}")
-    @ResponseStatus(code=HttpStatus.OK)
-    public String deleteNote(@PathVariable("id") Long idNote, @PathVariable("idPatient") Long idPatient, Model model){
+    @ResponseStatus(code = HttpStatus.OK)
+    public String deleteNote(@PathVariable("id") Long idNote, @PathVariable("idPatient") Long idPatient, Model model) {
         noteDTOService.deleteNote(idNote);
         Patient patient = patientService.findById(idPatient);
         List<NoteDTO> list = noteDTOService.getNotesForPatient(idPatient);
-        model.addAttribute("patient",patient);
+        model.addAttribute("patient", patient);
         patient.setNotes(list);
         return "Note/list";
     }
 
-    @GetMapping(path ="/note/update/{id}")
-    @ResponseStatus(code=HttpStatus.OK)
+    @GetMapping(path = "/note/update/{id}")
+    @ResponseStatus(code = HttpStatus.OK)
     public String updateNote(@PathVariable("id") Long idNote, Model model) throws JsonProcessingException {
         NoteDTO note = noteDTOService.getNote(idNote);
-        model.addAttribute("note",note);
+        model.addAttribute("note", note);
         return "Note/update";
     }
 
     @PostMapping("/note/update/{id}")
     @ResponseStatus(code = HttpStatus.OK)
     public String updateNote(@PathVariable("id") Long id, @Validated NoteDTO noteDTO,
-                               BindingResult result, Model model) {
+                             BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "Note/update";
         }
@@ -80,10 +82,38 @@ public class PatientController {
 
         Patient patient = patientService.findById(id);
         List<NoteDTO> list = noteDTOService.getNotesForPatient(id);
-        model.addAttribute("patient",patient);
+        model.addAttribute("patient", patient);
         patient.setNotes(list);
         return "Note/list";
     }
+
+    @PostMapping("/note/validate/{idPatient}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public String newNote(@PathVariable("idPatient") Long id, @Validated NoteDTO noteDTO, Model model, BindingResult result) {
+        if (!result.hasErrors()) {
+            try {
+                noteDTO.setIdPatient(id);
+                noteDTOService.newNote(noteDTO);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        Patient patient = patientService.findById(id);
+        List<NoteDTO> list = noteDTOService.getNotesForPatient(id);
+        model.addAttribute("patient", patient);
+        patient.setNotes(list);
+        return "Note/list";
+    }
+
+    @GetMapping("/note/add/{id}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public String addNote(@PathVariable("id") Long idPatient,NoteDTO note, Model model) {
+        Patient patient = patientService.findById(idPatient);
+        model.addAttribute("patient", patient);
+        return "Note/add";
+    }
+
+
 
     @GetMapping("/patient/notes/list/{id}")
     @ResponseStatus(code=HttpStatus.OK)
@@ -149,38 +179,4 @@ public class PatientController {
         model.addAttribute("patients", patientService.findAllPatient());
         return "redirect:/patient/liste";
     }
-
-
- // --------------------------------
-//    @GetMapping("/patient/{id}")
-//    @ResponseStatus(code=HttpStatus.OK)
-//    public Patient getPatientById(@PathVariable("id") Integer id){
-//    return patientService.findById(id);
-//    }
-//
-//
-//    @GetMapping("/patient/{lastname}/{firstname}")
-//    @ResponseStatus(code=HttpStatus.OK)
-//    public Patient getPatientWithLastName(@PathVariable("lastname") String lastName, @PathVariable("firstname") String firstName){
-//        return patientService.findByLastNameAndFirstName(lastName,firstName);
-//    }
-//
-//    @PostMapping("/patient")
-//    @ResponseStatus(code=HttpStatus.OK)
-//    public Patient newPatient(@RequestBody Patient patient){
-//        return patientService.newPatient(patient);
-//    }
-//
-//    @PutMapping("/patient/update")
-//    @ResponseStatus(code=HttpStatus.OK)
-//    public Patient updatePatientWithId(@RequestBody Patient patient) {
-//        return patientService.updatePatientData(patient);
-//    }
-//
-//    @DeleteMapping("patient/delete/{id}")
-//    @ResponseStatus(code=HttpStatus.OK)
-//    public Boolean deletePatientWithId(@PathVariable("id") Integer id){
-//        patientService.deletePatientById(id);
-//        return true;
-//    }
 }

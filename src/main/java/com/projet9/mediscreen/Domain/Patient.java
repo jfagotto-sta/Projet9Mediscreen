@@ -44,8 +44,11 @@ public class Patient implements Serializable {
     @Transient
     private List<NoteDTO> notes = new ArrayList<>();
 
+    @Transient
+    private PatientStatusDto patientStatusDto;
 
-    public Patient(Long id, String firstName, String lastName, Date birthDate, String gender, String phoneNumber, String address) {
+
+    public Patient(Long id, String firstName, String lastName, Date birthDate, String gender, String phoneNumber, String address, List<NoteDTO> notes, PatientStatusDto patientStatusDto) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -53,9 +56,20 @@ public class Patient implements Serializable {
         this.gender = gender;
         this.phoneNumber = phoneNumber;
         this.address = address;
+        this.notes = notes;
+        this.patientStatusDto = patientStatusDto;
     }
 
     public Patient() {
+    }
+
+
+    public PatientStatusDto getPatientStatusDto() {
+        return patientStatusDto;
+    }
+
+    public void setPatientStatusDto(PatientStatusDto patientStatusDto) {
+        this.patientStatusDto = patientStatusDto;
     }
 
     public Long getId() {

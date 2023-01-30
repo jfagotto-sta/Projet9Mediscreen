@@ -1,12 +1,14 @@
 package com.projet9.mediscreen.Domain;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
 public class NoteDTO {
 
     private long idNote;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date messageDate;
     private long idPatient;
 
