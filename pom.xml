@@ -17,16 +17,6 @@
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
-		<!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
-<!--		&lt;!&ndash; https://mvnrepository.com/artifact/org.mockito/mockito-junit-jupiter &ndash;&gt;-->
-<!--		<dependency>-->
-<!--			<groupId>org.mockito</groupId>-->
-<!--			<artifactId>mockito-junit-jupiter</artifactId>-->
-<!--			<version>4.9.0</version>-->
-<!--			<scope>test</scope>-->
-<!--		</dependency>-->
-
-		<!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
@@ -39,31 +29,10 @@
 			<artifactId>json-simple</artifactId>
 			<version>1.1.1</version>
 		</dependency>
-
-
-		<!--
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-oauth2-client</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-		-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
-<!--		&lt;!&ndash; https://mvnrepository.com/artifact/org.hibernate/hibernate-core &ndash;&gt;-->
-<!--		<dependency>-->
-<!--			<groupId>org.hibernate</groupId>-->
-<!--			<artifactId>hibernate-core</artifactId>-->
-<!--			<type>pom</type>-->
-<!--		</dependency>-->
-
-		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -124,7 +93,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.25</version>
+			<version>8.0.32</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.data</groupId>
@@ -161,9 +130,6 @@
 			<artifactId>jersey-media-json-jackson</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-
-
-
 	</dependencies>
 
 	<build>
@@ -183,9 +149,9 @@
 					<source>16</source>
 					<target>16</target>
 				</configuration>
+
 			</plugin>
 		</plugins>
-
+		<finalName>p9patient</finalName>
 	</build>
-
 </project>

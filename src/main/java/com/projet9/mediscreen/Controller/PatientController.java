@@ -39,8 +39,8 @@ public class PatientController {
     @GetMapping("/patient/list")
     @ResponseStatus(code = HttpStatus.OK)
     public String home(Model model) {
-        Iterable<Patient> bidule = patientService.findAllPatient();
-        model.addAttribute("patients", bidule);
+        Iterable<Patient> patientList = patientService.findAllPatient();
+        model.addAttribute("patients", patientList);
         return "Patient/list";
     }
 

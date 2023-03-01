@@ -25,7 +25,7 @@ public class NoteDTOService {
 
         Client client = ClientBuilder.newClient();
 
-        String response = client.target("http://localhost:8082/notes/patient/"+idPatient)
+        String response = client.target("http://localhost:8091/notes/patient/"+idPatient)
                 .request(MediaType.APPLICATION_JSON)
                 .get(String.class);
 
@@ -36,13 +36,11 @@ public class NoteDTOService {
 
         return items;
     }
-
-
     public void deleteNote(long idNote){
 
         Client client = ClientBuilder.newClient();
 
-        WebTarget resource = client.target("http://localhost:8082/delete/note/"+idNote);
+        WebTarget resource = client.target("http://localhost:8091/delete/note/"+idNote);
         resource.request().delete(Long.class);
     }
 
@@ -54,7 +52,7 @@ public class NoteDTOService {
 //
 //        gson.toJson(noteDTO);
 
-        WebTarget resource = client.target("http://localhost:8082/note/update");
+        WebTarget resource = client.target("http://localhost:8091/note/update");
         resource.request()
                 .accept(MediaType.APPLICATION_JSON)
                 .put(Entity.json(noteDTO), NoteDTO.class);
@@ -63,7 +61,7 @@ public class NoteDTOService {
     public NoteDTO getNote(long idNote) throws JsonProcessingException {
         Client client = ClientBuilder.newClient();
 
-        NoteDTO response = client.target("http://localhost:8082/note/" + idNote)
+        NoteDTO response = client.target("http://localhost:8091/note/" + idNote)
                 .request(MediaType.APPLICATION_JSON)
                 .get(NoteDTO.class);
 
@@ -77,7 +75,7 @@ public class NoteDTOService {
         Client client = ClientBuilder.newClient();
 
 
-        WebTarget resource = client.target("http://localhost:8082/note");
+        WebTarget resource = client.target("http://localhost:8091/note");
         resource.request()
                 .accept(MediaType.APPLICATION_JSON)
                 .post(Entity.json(noteDTO), NoteDTO.class);
