@@ -21,7 +21,7 @@ services:
     image : p9patient
     container_name: projet9_patient
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3307/mediscreen_db_patient?autoReconnect=true&useSSL=false&serverTimezone=UTC
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/mediscreen_db_patient?autoReconnect=true&useSSL=false&serverTimezone=UTC
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
     networks:
       - web-server
@@ -33,35 +33,46 @@ services:
       - mysql
     restart: always
 
-#  mongodb:
-#    image: mongo
+  mongo:
+    container_name: mongodb
+    image: mongo:latest
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    networks:
+      - web-server
+
+#  mongo-express:
+#    image: mongo-express
 #    restart: always
+#    ports:
+#      - 8081:8081
 #    environment:
-#      MONGO_INITDB_ROOT_USERNAME: root
-#      MONGO_INITDB_ROOT_PASSWORD: root
-#    ports:
-#      - "27017:27017"
-#
-#  note:
-#    image: note
-#    container_name: projet9_note
-#    networks:
-#      - web-server
-#    ports:
-#      - "8091:8091"
-#    depends_on:
-#      - mongodb
-#
-#  patientanlysis:
-#    image: patientanalysis
-#    container_name: patient_analysis
-#    networks:
-#      - web-server
-#    ports:
-#      - "8092:8092"
-#    depends_on:
-#      - patient
-#      - note
+#      ME_CONFIG_MONGODB_ADMINUSERNAME: joffrey.fagotto4@laposte.net
+#      ME_CONFIG_MONGODB_ADMINPASSWORD: Yrn7rcfwarcraft!
+#      ME_CONFIG_MONGODB_URL: mongodb://root:Projet9Note@mongo:27017/
+
+  note:
+    image: note
+    container_name: projet9_note
+    networks:
+      - web-server
+    ports:
+      - "8091:8091"
+    depends_on:
+      - mongo
+
+  patientanlysis:
+    image: patientanalysis
+    container_name: patient_analysis
+    networks:
+      - web-server
+    ports:
+      - "8092:8092"
+    depends_on:
+      - patient
+      - note
 
 
 networks:
