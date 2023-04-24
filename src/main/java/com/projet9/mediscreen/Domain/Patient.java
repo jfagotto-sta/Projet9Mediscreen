@@ -47,6 +47,9 @@ public class Patient implements Serializable {
     @Transient
     private PatientStatusDto patientStatusDto;
 
+    @Transient
+    private String patientStatus;
+
 
     public Patient(Long id, String firstName, String lastName, Date birthDate, String gender, String phoneNumber, String address, List<NoteDTO> notes, PatientStatusDto patientStatusDto) {
         this.id = id;
@@ -63,29 +66,12 @@ public class Patient implements Serializable {
     public Patient() {
     }
 
-
-    public PatientStatusDto getPatientStatusDto() {
-        return patientStatusDto;
-    }
-
-    public void setPatientStatusDto(PatientStatusDto patientStatusDto) {
-        this.patientStatusDto = patientStatusDto;
-    }
-
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
     }
 
     public String getFirstName() {
@@ -104,6 +90,13 @@ public class Patient implements Serializable {
         this.lastName = lastName;
     }
 
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
 
     public String getGender() {
         return gender;
@@ -129,11 +122,27 @@ public class Patient implements Serializable {
         this.address = address;
     }
 
+    public List<NoteDTO> getNotes() {
+        return notes;
+    }
+
     public void setNotes(List<NoteDTO> notes) {
         this.notes = notes;
     }
 
-    public List<NoteDTO> getNotes() {
-        return this.notes;
+    public PatientStatusDto getPatientStatusDto() {
+        return patientStatusDto;
+    }
+
+    public void setPatientStatusDto(PatientStatusDto patientStatusDto) {
+        this.patientStatusDto = patientStatusDto;
+    }
+
+    public String getPatientStatus() {
+        return patientStatusDto==null?"":patientStatusDto.toString();
+    }
+
+    public void setPatientStatus(String patientStatus) {
+        this.patientStatus = patientStatus;
     }
 }

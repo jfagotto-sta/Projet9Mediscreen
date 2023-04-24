@@ -38,26 +38,4 @@ public class PatientRestController {
         return patient;
     }
 
-    @GetMapping("/patient/{id}")
-    @ResponseStatus(code = HttpStatus.OK)
-    public Patient getPatientById(@PathVariable Long id) {
-        return patientService.findById(id);
-    }
-
-//o
-
-
-//    @GetMapping("/note/list/patient")
-//    @ResponseStatus(code = HttpStatus.OK)
-//    public List<NoteDTO> getListOfNotesForPatient(@RequestParam long id, Model model) throws IOException {
-//        List<NoteDTO> noteDTOList = noteDTOService.listOfNoteForAPatient(id);
-//        return noteDTOList;
-//    }
-
-//    @PutMapping("/note/update/patient")
-//    @ResponseStatus(code = HttpStatus.OK)
-//    public NoteDTO updatePatientNote(@RequestBody NoteDTO noteDTO) {
-//        noteDTOService.updateNote(noteDTO);
-//        return noteDTO;
-//    }
 }

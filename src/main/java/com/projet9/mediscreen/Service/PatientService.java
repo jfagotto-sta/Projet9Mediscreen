@@ -1,6 +1,7 @@
 package com.projet9.mediscreen.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.projet9.mediscreen.Domain.NoteDTO;
 import com.projet9.mediscreen.Domain.Patient;
 import com.projet9.mediscreen.Domain.PatientStatusDto;
 import com.projet9.mediscreen.Repository.IPatientRepository;
@@ -18,16 +19,38 @@ public class PatientService {
     @Autowired
     IPatientRepository iPatientRepository;
 
+
     @Autowired
     PatientStatusDTOService patientStatusDTOService;
 
+    @Autowired
+    NoteDTOService noteDtoService;
 
   public Patient newPatient(Patient patient) {
         return iPatientRepository.save(patient);
     }
 
+    public Patient findByIdSansStatus(long id){
+        Patient p =  iPatientRepository.findById(id);
+        p.setNotes(noteDtoService.getNotesForPatient(id));
+        return p;
+
+    }
+
     public Patient findById(long id){
-        return iPatientRepository.findById(id);
+        Patient p =  iPatientRepository.findById(id);
+        p.setNotes(noteDtoService.getNotesForPatient(id));
+        try {
+            p.setPatientStatusDto(patientStatusDTOService.getPatientStatus(id));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        return p;
+
+    }
+
+    public void deleteAll(){
+      iPatientRepository.deleteAll();
     }
 
     public Boolean deletePatientById(int id){
@@ -39,16 +62,19 @@ public class PatientService {
     public Iterable<Patient> findAllPatient(){
         Iterable<Patient> patients = iPatientRepository.findAll();
         for (Patient p :patients) {
-            PatientStatusDto patientStatusDto = null;
             try {
-                patientStatusDto = patientStatusDTOService.getPatientStatus(p.getId());
+                PatientStatusDto patientStatusDto = patientStatusDTOService.getPatientStatus(p.getId());
+                List<NoteDTO> notes = noteDtoService.getNotesForPatient(p.getId());
+                p.setPatientStatusDto(patientStatusDto);
+                p.setNotes(notes);
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             }
-            p.setPatientStatusDto(patientStatusDto);
         }
         return patients;
     }
+
+
 
     public Patient updatePatient(Patient patient){
         return iPatientRepository.save(patient);
@@ -62,27 +88,5 @@ public class PatientService {
         return iPatientRepository.save(patient);
 
     }
-
-//    public void deleteAll() {
-//        iPatientRepository.deleteAll();
-//    }
-//
-//    public Note findNoteForAPatient(int patientId) {
-//      List<Note> completeList = findAllNotes();
-//      Patient p = findById(patientId);
-//        Note patientNote = new Note();
-//        for (Note note: completeList ) {
-//            if(note.getIdPatient()==p.getId()) {
-//                patientNote.setIdNote(note.getIdNote());
-//                patientNote.setMessage(note.getMessage());
-//                patientNote.setMessageDate(note.getMessageDate());
-//                patientNote.setIdPatient(p.getId());
-//            }
-//        }
-//        return patientNote;
-//    }
-//
-//    public List<Note> findAllNotes(){
-//      return iNoteRepository.findAll();
-//    }
+    
 }
