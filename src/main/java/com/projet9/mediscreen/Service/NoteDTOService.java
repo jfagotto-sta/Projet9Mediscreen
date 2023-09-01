@@ -24,8 +24,8 @@ public class NoteDTOService {
 
 
         Client client = ClientBuilder.newClient();
-
-        String response = client.target("http://localhost:8091/notes/patient/"+idPatient)
+        System.out.println("id " +idPatient);
+        String response = client.target("http://note:8091/notes/patient/"+idPatient)
                 .request(MediaType.APPLICATION_JSON)
                 .get(String.class);
 
@@ -40,7 +40,7 @@ public class NoteDTOService {
 
         Client client = ClientBuilder.newClient();
 
-        WebTarget resource = client.target("http://localhost:8091/delete/note/"+idNote);
+        WebTarget resource = client.target("http://localhost:8091/note/delete/"+idNote);
         resource.request().delete(Long.class);
     }
 

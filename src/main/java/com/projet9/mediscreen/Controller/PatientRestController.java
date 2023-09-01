@@ -18,6 +18,7 @@ import java.net.ProtocolException;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins="http://localhost/8091")
 public class PatientRestController {
 
     @Autowired
